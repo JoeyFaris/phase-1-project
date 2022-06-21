@@ -1,0 +1,20 @@
+body {
+    background-image: url('./images/game_page_bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0px;
+}
+
+#game-container {
+    width: 700px;
+    max-width: 700px;
+    min-width: 700px;
+    height: 800px;
+    width: 100%;
+    margin: auto;
+    background-color: transparent;
+    background-image: url('./images/game_main_menu.png');
+    background-size: cover;
+    padding: 60px 30px 60px 30px;
+    box-shadow: 0 0 10px 10px black;
+}
