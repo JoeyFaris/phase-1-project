@@ -45,7 +45,7 @@ function createGameBoard() {
             }
             
             if(j == 0){
-                gameDIV.style.marginRight = '270px'
+                gameDIV.style.marginRight = '270px' 
             }
             else if(j == 1){
                 gameDIV.style.marginRight = '206px'
