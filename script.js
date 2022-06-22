@@ -1,4 +1,4 @@
-const gameBoard = document.getElementById('game-container')
+const gameBoard = document.getElementById('game-container') 
 const testGameBoard = "000000001000060020901000000710000005000000403000000700000000089000478000060000070"
 
 function createGameBoard() {
