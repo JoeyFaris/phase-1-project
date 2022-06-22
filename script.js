@@ -3,11 +3,11 @@ const gameBoard = document.getElementById('game-container')
 function mainMenu() {
     backgroundEffects = document.createElement('img')
     backgroundEffects.src = './images/glowy_stuff.png'
-    backgroundEffects.style.height = '815px'
+    backgroundEffects.style.height = '860px'
     backgroundEffects.style.position = 'absolute'
     backgroundEffects.style.top = '0px'
-    backgroundEffects.style.right = '50%'
-    backgroundEffects.style.transform = 'translate(50%, 0px)'
+    backgroundEffects.style.opacity = '0'
+    backgroundEffects.style.animation = 'fadeIn 1s ease-out 1s 1 forwards';
     gameBoard.append(backgroundEffects)
 
     menuBoard = document.createElement('img')
@@ -15,8 +15,8 @@ function mainMenu() {
     menuBoard.style.height = '815px'
     menuBoard.style.position = 'absolute'
     menuBoard.style.top = '0px'
-    menuBoard.style.right = '50%'
-    menuBoard.style.transform = 'translate(50%, 0px)'
+    menuBoard.style.marginLeft = '20px'
+    menuBoard.style.animation = '1s ease-out 0s 1 slideInFromTop';
     gameBoard.append(menuBoard)
 
     menuTitle = document.createElement('img')
@@ -26,7 +26,10 @@ function mainMenu() {
     menuTitle.style.top = '90px'
     menuTitle.style.right = '50%'
     menuTitle.style.transform = 'translate(50%, 0px)'
+    menuTitle.style.opacity = '0'
+    menuTitle.style.animation = 'fadeIn 1s ease-out 1s 1 forwards';
     gameBoard.append(menuTitle)
+
 
     birdGraphic = document.createElement('img')
     birdGraphic.src = './images/bird_character.png'
@@ -43,6 +46,8 @@ function mainMenu() {
     startGameButton.style.top = '325px'
     startGameButton.style.right = '50%'
     startGameButton.style.transform = 'translate(50%, 0px)'
+    startGameButton.style.opacity = '0'
+    startGameButton.style.animation = 'fadeIn 1s ease-out 1s 1 forwards';
     gameBoard.append(startGameButton)
 
     menuTitleShadow = document.createElement('h1')
@@ -53,6 +58,8 @@ function mainMenu() {
     menuTitleShadow.style.right = '50%'
     menuTitleShadow.style.transform = 'translate(50%, 0px)'  
     menuTitleShadow.style.top = '200px'
+    menuTitleShadow.style.opacity = '0'
+    menuTitleShadow.style.animation = 'fadeIn 1s ease-out 1s 1 forwards';
     gameBoard.append(menuTitleShadow)
 
     menuTitle = document.createElement('h1')
@@ -62,7 +69,9 @@ function mainMenu() {
     menuTitle.style.position = 'absolute'
     menuTitle.style.right = '50%'
     menuTitle.style.transform = 'translate(50%, 0px)'
-    menuTitle.style.top = '195px' 
+    menuTitle.style.top = '195px'
+    menuTitle.style.opacity = '0'
+    menuTitle.style.animation = 'fadeIn 1s ease-out 1s 1 forwards';
     gameBoard.append(menuTitle)
 }
 
