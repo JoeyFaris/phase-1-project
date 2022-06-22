@@ -1,4 +1,10 @@
+@font-face {
+    font-family: 'gameFont'; /*a name to be used later*/
+    src: url('./fonts/KOMIKAX_.ttf'); /*URL to font*/
+}
+
 body {
+    font-family: 'gameFont';
     background-image: url('./images/game_page_bg.png');
     background-repeat: no-repeat;
     background-position: center;
@@ -6,15 +12,13 @@ body {
 }
 
 #game-container {
-    width: 700px;
-    max-width: 700px;
-    min-width: 700px;
-    height: 800px;
+    max-width: 650px;
+    min-width: 650px;
+    height: 868px;
     width: 100%;
     margin: auto;
     background-color: transparent;
-    background-image: url('./images/game_main_menu.png');
+    background-image: url('./images/main_menu_bg.png');
     background-size: cover;
-    padding: 60px 30px 60px 30px;
     box-shadow: 0 0 10px 10px black;
 }
