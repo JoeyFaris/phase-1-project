@@ -144,4 +144,15 @@ body {
     animation: fadeIn 1s ease-out 1.5s 1 forwards;
 } 
 
+.play-tile {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    transform: translate(50%, 0px);
+    right: 50%;
+    background-size: cover;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1.5s 1 forwards;
+} 
+
 /* End Build Game Board */

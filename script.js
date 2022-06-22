@@ -1,5 +1,5 @@
 const gameBoard = document.getElementById('game-container') 
-const testGameBoard = "000000001000060020901000000710000005000000403000000700000000089000478000060000070"
+const testGameBoard = "000020480001400936300600205000010003650000000010060008006840300400076150197030000"
 
 function createGameBoard() {
     for(let i=0; i<9; i++){
@@ -8,67 +8,72 @@ function createGameBoard() {
             gameDIV.setAttribute('id', `${i+1}-${j+1}`)
             gameDIV.setAttribute('class', 'board-tile')
             gameDIV.setAttribute('tileData', testGameBoard[(i*9)+j])
+            
 
             let populateTile = gameDIV.getAttribute('tileData')
             
-            if(populateTile != '0'){
+            if(populateTile != '0') {
                 gameDIV.style.backgroundImage = `url('./images/${populateTile}_gameboard.png')`
+                gameDIV.setAttribute('lockedTile', '1')
+            }
+            else {
+                gameDIV.setAttribute('lockedTile', '0')
             }
 
 
-            if(i == 0){
+            if(i == 0) {
                 gameDIV.style.top = '174px'
             }
-            else if(i == 1){
+            else if(i == 1) {
                 gameDIV.style.top = '237px'
             }
-            else if(i == 2){
+            else if(i == 2) {
                 gameDIV.style.top = '302px'
             }
-            else if(i == 3){
+            else if(i == 3) {
                 gameDIV.style.top = '375px'
             }
-            else if(i == 4){
+            else if(i == 4) {
                 gameDIV.style.top = '437px'
             }
-            else if(i == 5){
+            else if(i == 5) {
                 gameDIV.style.top = '503px'
             }
-            else if(i == 6){
+            else if(i == 6) {
                 gameDIV.style.top = '578px'
             }
-            else if(i == 7){
+            else if(i == 7) {
                 gameDIV.style.top = '640px'
             }
-            else{
+            else {
                 gameDIV.style.top = '706px'
             }
             
-            if(j == 0){
+            if(j == 0) {
                 gameDIV.style.marginRight = '270px' 
             }
-            else if(j == 1){
+            else if(j == 1) {
                 gameDIV.style.marginRight = '206px'
             }
-            else if(j == 2){
+            else if(j == 2) {
                 gameDIV.style.marginRight = '142px'
             }
-            else if(j == 3){
+            else if(j == 3) {
                 gameDIV.style.marginRight = '66px'
             }
-            else if(j == 4){
+            else if(j == 4) {
                 gameDIV.style.marginRight = '2px'
             }
-            else if(j == 5){
+            else if(j == 5) {
                 gameDIV.style.marginRight = '-65px'
             }
-            else if(j == 6){
+            else if(j == 6) {
                 gameDIV.style.marginRight = '-139px'
             }
-            else if(j == 7){
+            else if(j == 7) {
                 gameDIV.style.marginRight = '-204px'
             }
-            else{
+            else {
                 gameDIV.style.marginRight = '-268px'
             }                
 
