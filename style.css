@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'gameFont'; /*a name to be used later*/
+    src: url('./fonts/KOMIKAX_.ttf'); /*URL to font*/
+}
+
+body {
+    font-family: 'gameFont';
+    background-image: url('./images/game_page_bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0px;
+}
+
+#game-container {
+    max-width: 650px;
+    min-width: 650px;
+    height: 868px;
+    width: 100%;
+    margin: auto;
+    background-color: transparent;
+    background-image: url('./images/main_menu_bg.png');
+    background-size: cover;
+    box-shadow: 0 0 10px 10px black;
+}
+
+@keyframes slideInFromTop {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+@keyframes fadeIn {
+    0% { 
+        opacity: 0; 
+    }
+    100% { 
+        opacity: 1; 
+    }
+}
