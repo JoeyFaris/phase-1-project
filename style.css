@@ -1,3 +1,4 @@
+/* Basic styles for game layout */
 @font-face {
     font-family: 'gameFont'; /*a name to be used later*/
     src: url('./fonts/KOMIKAX_.ttf'); /*URL to font*/
@@ -17,12 +18,11 @@ body {
     height: 868px;
     width: 100%;
     margin: auto;
-    background-color: transparent;
-    background-image: url('./images/main_menu_bg.png');
-    background-size: cover;
     box-shadow: 0 0 10px 10px black;
 }
+/* End Basic styles for game layout */
 
+/* Animations */
 @keyframes slideInFromTop {
     0% {
       transform: translateY(-100%);
@@ -30,7 +30,17 @@ body {
     100% {
       transform: translateY(0);
     }
-  }
+}
+
+@keyframes slideOutToTop {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+}
+
 
 @keyframes fadeIn {
     0% { 
@@ -40,3 +50,111 @@ body {
         opacity: 1; 
     }
 }
+
+@keyframes fadeOut {
+    0% { 
+        opacity: 1; 
+    }
+    100% { 
+        opacity: 0; 
+    }
+}
+/* End Animations */
+
+
+/* Main Menu Styles */
+#game-container {
+    background-color: transparent;
+    background-image: url('./images/main_menu_bg.png');
+    background-size: cover;
+}
+
+#glowy-stuff {
+    height: 860px;
+    position: absolute;
+    top: 0px;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s 1 forwards;
+}
+
+#menu-background {
+    height: 815px;
+    position: absolute;
+    top: 0px;
+    margin-left: 20px;
+    animation: 1s ease-out 0s 1 slideInFromTop;
+}
+
+#game-main-menu-title {
+    height: 125px;
+    position: absolute;
+    top: 90px;
+    right: 50%;
+    transform: translate(50%, 0px);
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s 1 forwards
+}
+
+#bird-character {
+    height: 300px;
+    position: relative;
+    top: 425px;
+    right: 50px;
+}
+
+#start-game-button {
+    height: 75px;
+    position: absolute;
+    top: 325px;
+    right: 50%;
+    transform: translate(50%, 0px);
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s 1 forwards;
+}
+
+#menu-title-shadow, #menu-title {
+    font-size: 46px;
+    position: absolute;
+    right: 50%;
+    transform: translate(50%, 0px);
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s 1 forwards;
+}
+
+#menu-title-shadow {
+    color: #d8b366;
+    top: 200px;
+}
+
+#menu-title { 
+    color: #69251c;
+    top: 195px;
+}
+/* End Main Menu Styles */
+
+/* Build Game Board */
+.board-tile {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    transform: translate(50%, 0px);
+    right: 50%;
+    background-size: cover;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1.5s 1 forwards;
+} 
+
+.play-tile {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    transform: translate(50%, 0px);
+    right: 50%;
+    background-size: cover;
+    opacity: 0;
+    top: 796px;
+    cursor: move;
+    animation: fadeIn 1s ease-out 1.5s 1 forwards;
+} 
+
+/* End Build Game Board */
