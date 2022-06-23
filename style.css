@@ -152,6 +152,8 @@ body {
     right: 50%;
     background-size: cover;
     opacity: 0;
+    top: 796px;
+    cursor: move;
     animation: fadeIn 1s ease-out 1.5s 1 forwards;
 } 
 

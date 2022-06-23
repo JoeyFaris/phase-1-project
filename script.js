@@ -1,10 +1,20 @@
 const gameBoard = document.getElementById('game-container') 
 const testGameBoard = "000020480001400936300600205000010003650000000010060008006840300400076150197030000"
 
+function handleDragStart(e) {
+    setTimeout(function(){
+        e.target.style.visibility = "hidden";
+    }, 0);
+}
+function handleDragEnd(e){
+    e.target.style.visibility = "visible";
+}
+
 function createGameBoard() {
     for(let i=0; i<9; i++){
+
         for(let j=0; j<9; j++){
-            gameDIV = document.createElement('div')
+            let gameDIV = document.createElement('div')
             gameDIV.setAttribute('id', `${i+1}-${j+1}`)
             gameDIV.setAttribute('class', 'board-tile')
             gameDIV.setAttribute('tileData', testGameBoard[(i*9)+j])
@@ -80,6 +90,51 @@ function createGameBoard() {
             gameBoard.append(gameDIV)
         }
     }
+
+    for(let k=0;k<9;k++){
+        let playTileDiv = document.createElement('div')
+        playTileDiv.setAttribute('tileData', `${(k+1)}`)
+        playTileDiv.setAttribute('id', `play-tile-${(k+1)}`)
+        playTileDiv.setAttribute('class', 'play-tile')
+        playTileDiv.setAttribute('draggable', 'true')
+        playTileDiv.style.backgroundImage = `url('./images/${(k+1)}_button.png')`
+
+        if(k == '0'){
+            playTileDiv.style.marginRight = '272px'
+        }
+        else if(k == '1'){
+            playTileDiv.style.marginRight = '204px'
+        }
+        else if(k == '2'){
+            playTileDiv.style.marginRight = '136px'
+        }
+        else if(k == '3'){
+            playTileDiv.style.marginRight = '68px'
+        }
+        else if(k == '4'){
+            playTileDiv.style.marginRight = '1px'
+        }
+        else if(k == '5'){
+            playTileDiv.style.marginRight = '-66px'
+        }
+        else if(k == '6'){
+            playTileDiv.style.marginRight = '-133px'
+        }
+        else if(k == '7'){
+            playTileDiv.style.marginRight = '-201px'
+        }
+        else if(k == '8'){
+            playTileDiv.style.marginRight = '-271px'
+        }
+
+        gameBoard.append(playTileDiv)
+    }
+
+    let playTiles = document.querySelectorAll('.play-tile');
+    playTiles.forEach(function (playTile) {
+        playTile.addEventListener('dragstart', handleDragStart);
+        playTile.addEventListener('dragend', handleDragEnd);
+    });
 }
 
 function startGame() {
