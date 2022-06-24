@@ -1,5 +1,5 @@
 const gameBoard = document.getElementById('game-container') 
-const testGameBoard = "000000001000060020901000000710000005000000403000000700000000089000478000060000070"
+const testGameBoard = "000020480001400936300600205000010003650000000010060008006840300400076150197030000"
 let draggedPlayTile = null;
 
 function handleDragStart(e) {
@@ -61,6 +61,7 @@ function winnerScreen(){
     const gameTiles = document.getElementsByClassName('board-tile')
     for(let gameTile of gameTiles){
         gameTile.style.display = 'none'
+
     }
     gameBoard.style.backgroundImage = 'url("./images/main_menu_bg.png")'
     menuBoard.style.animation = 'slideInFromTop 0.5s ease-out 0s 1 forwards'
@@ -104,14 +105,14 @@ function checkGameBoardForDuplicates(number, row, column){
     if(counter > 1){
         arrayOfRowTiles.forEach((tile) => {
             if(tile.getAttribute('tiledata') == number){
-                tile.classList.add('duplicate-tile');
+                setTimeout(() => {tile.classList.add('duplicate-tile')}, 10)
             }
         })
     }
     else{
         arrayOfRowTiles.forEach((tile) => {
             if(tile.getAttribute('tiledata') == number){
-                tile.classList.remove('duplicate-tile');
+                tile.classList.remove('duplicate-tile')
             }
         })
     }
