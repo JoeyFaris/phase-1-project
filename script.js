@@ -1,7 +1,7 @@
 const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "apikeygoeshere",
+      "X-RapidAPI-Key": "c34eab33acmshdd5f894180ecbdcp12bcabjsne2f2f6a1f75b",
       "X-RapidAPI-Host": "sudoku-all-purpose-pro.p.rapidapi.com",
     },
 };
@@ -24,7 +24,8 @@ function makeNewGameBoard(){
   
   function convertData(data) {
     gameBoardNumbers = data.output.raw_data;
-  
+    createGameBoard(gameBoardNumbers)
+    
     //solve
     setTimeout(() => {
       fetch(
@@ -58,7 +59,7 @@ function makeNewGameBoard(){
   
     return fetch("http://localhost:3000/gameBoards", configurationObject)
       .then((data) => data.json())
-      .then((parsed) => createGameBoard(parsed.startingBoard))
+      .then((parsed) => parsed)
       .catch((error) => console.log(error));
   }
   
