@@ -1,7 +1,7 @@
 const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "c34eab33acmshdd5f894180ecbdcp12bcabjsne2f2f6a1f75b",
+      "X-RapidAPI-Key": "apikeygoeshere",
       "X-RapidAPI-Host": "sudoku-all-purpose-pro.p.rapidapi.com",
     },
 };
