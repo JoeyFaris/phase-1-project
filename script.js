@@ -5,6 +5,7 @@ const options = {
       "X-RapidAPI-Host": "sudoku-all-purpose-pro.p.rapidapi.com",
     },
 };
+
 const gameBoard = document.getElementById('game-container') 
 let gameBoardNumbers = ''
 let gameBoardSolution = ''
@@ -167,14 +168,14 @@ function checkGameBoardForDuplicates(number, row, column){
     if(counter > 1){
         arrayOfRowTiles.forEach((tile) => {
             if(tile.getAttribute('tiledata') == number){
-                tile.classList.add('duplicate-tile');
+                setTimeout(() => {tile.classList.add('duplicate-tile')}, 10)
             }
         })
     }
     else{
         arrayOfRowTiles.forEach((tile) => {
             if(tile.getAttribute('tiledata') == number){
-                tile.classList.remove('duplicate-tile');
+                tile.classList.remove('duplicate-tile')
             }
         })
     }
