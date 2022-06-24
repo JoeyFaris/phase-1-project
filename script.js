@@ -1,13 +1,247 @@
 const gameBoard = document.getElementById('game-container') 
-const testGameBoard = "000020480001400936300600205000010003650000000010060008006840300400076150197030000"
+const testGameBoard = "000000001000060020901000000710000005000000403000000700000000089000478000060000070"
+let draggedPlayTile = null;
 
 function handleDragStart(e) {
     setTimeout(function(){
-        e.target.style.visibility = "hidden";
+        e.target.style.visibility = "hidden"
     }, 0);
+    draggedPlayTile = e.target
 }
+
+function handleDragOver(e){
+    e.preventDefault()
+}
+
 function handleDragEnd(e){
-    e.target.style.visibility = "visible";
+    e.target.style.visibility = "visible"
+}
+
+function handleDrop(e){
+    e.preventDefault()
+    lockedTile = e.target.getAttribute('lockedtile')
+    isBoardTile = e.target.className
+    numberToPlace = draggedPlayTile.getAttribute('tiledata')
+    const targetRow = e.target.id[0]
+    const targetColumn = e.target.id[2]
+    
+    e.target.addEventListener('click', () => {
+        if(lockedTile != '1'){
+            e.target.style.backgroundImage = ''
+            e.target.classList.remove('duplicate-tile')
+            e.target.setAttribute('tiledata', '0')
+            setTimeout(checkGameBoardForDuplicates(numberToPlace, targetRow, targetColumn), 10)    
+        }
+    })
+
+    if(lockedTile != '1' && isBoardTile == 'board-tile'){
+        e.target.style.backgroundImage = `url('./images/${numberToPlace}_gameboard.png')`
+        e.target.setAttribute('tiledata', numberToPlace)
+        setTimeout(checkGameBoardForDuplicates(numberToPlace, targetRow, targetColumn), 10)      
+    }
+}
+
+function checkForWin(){
+    for(let i=0;i<9;i++){
+        for(let j=0;j<9;j++){
+            const checkTiles = document.getElementById(`${(i+1)}-${(j+1)}`)
+            if(checkTiles.getAttribute('tiledata') == '0'){
+                return false
+            }
+            else if(checkTiles.classList.contains('duplicate-tile')){
+                return false
+            }
+        }
+    }
+    return true
+}
+
+function winnerScreen(){
+    const menuBoard = document.getElementById('menu-background')
+    const gameTiles = document.getElementsByClassName('board-tile')
+    for(let gameTile of gameTiles){
+        gameTile.style.display = 'none'
+    }
+    gameBoard.style.backgroundImage = 'url("./images/main_menu_bg.png")'
+    menuBoard.style.animation = 'slideInFromTop 0.5s ease-out 0s 1 forwards'
+
+    const gameMainMenuTitle = document.getElementById('game-main-menu-title')
+    gameMainMenuTitle.src = './images/completed_text.png'
+    gameMainMenuTitle.style.opacity = '0'
+    gameMainMenuTitle.style.animation = 'fadeIn 0.5s ease-out 0.5s 1 forwards'
+
+    const gameWinnerTextShadow = document.getElementById('menu-title-shadow')
+    gameWinnerTextShadow.textContent = 'You Win!'
+    gameWinnerTextShadow.style.opacity = '0'
+    gameWinnerTextShadow.style.animation = 'fadeIn 0.5s ease-out 1s 1 forwards'
+
+    const gameWinnerText = document.getElementById('menu-title')
+    gameWinnerText.textContent = 'You Win!'
+    gameWinnerText.style.opacity = '0'
+    gameWinnerText.style.animation = 'fadeIn 0.5s ease-out 1s 1 forwards'
+
+    const gameWinnerPlayAgainButton = document.getElementById('start-game-button')
+    gameWinnerPlayAgainButton.src = './images/play_again_button.png'
+    gameWinnerPlayAgainButton.style.opacity = '0'
+    gameWinnerPlayAgainButton.style.animation = 'fadeIn 0.5s ease-out 1s 1 forwards'
+}
+
+function checkGameBoardForDuplicates(number, row, column){
+    let arrayOfRowTiles = []
+    let arrayOfColumnTiles = []
+    let arrayOfBoxTiles = []
+    let counter = 0
+    for(let i=0;i<9;i++){
+        arrayOfRowTiles[i] = document.getElementById(`${row}-${i+1}`)
+        arrayOfColumnTiles[i] = document.getElementById(`${i+1}-${column}`)
+    }
+
+    arrayOfRowTiles.forEach((tile) => {
+        if(tile.getAttribute('tiledata') == number){
+            counter++
+        }
+    })
+    if(counter > 1){
+        arrayOfRowTiles.forEach((tile) => {
+            if(tile.getAttribute('tiledata') == number){
+                tile.classList.add('duplicate-tile');
+            }
+        })
+    }
+    else{
+        arrayOfRowTiles.forEach((tile) => {
+            if(tile.getAttribute('tiledata') == number){
+                tile.classList.remove('duplicate-tile');
+            }
+        })
+    }
+
+    counter = 0
+    arrayOfColumnTiles.forEach((tile) => {
+        if(tile.getAttribute('tiledata') == number){
+            counter++
+        }
+    })
+    if(counter > 1){
+        arrayOfColumnTiles.forEach((tile) => {
+            if(tile.getAttribute('tiledata') == number){
+                tile.classList.add('duplicate-tile');
+            }
+        })
+    }
+    else{
+        arrayOfColumnTiles.forEach((tile) => {
+            if(tile.getAttribute('tiledata') == number){
+                tile.classList.remove('duplicate-tile');
+            }
+        })
+    }    
+
+    let boxCounter = 0
+    if(row < 4){
+        if(column < 4){
+            for(let i=0;i<3;i++){
+                for(let j=0;j<3;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }
+        }
+        else if(column < 7){
+            for(let i=0;i<3;i++){
+                for(let j=3;j<6;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }            
+        }
+        else{
+            for(let i=0;i<3;i++){
+                for(let j=6;j<9;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }
+        }
+    }
+    else if(row < 7){
+        if(column < 4){
+            for(let i=3;i<6;i++){
+                for(let j=0;j<3;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }
+        }
+        else if(column < 7){
+            for(let i=3;i<6;i++){
+                for(let j=3;j<6;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }            
+        }
+        else{
+            for(let i=3;i<6;i++){
+                for(let j=6;j<9;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }            
+        }
+    }
+    else{
+        if(column < 4){
+            for(let i=6;i<9;i++){
+                for(let j=0;j<3;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }
+        }
+        else if(column < 7){
+            for(let i=6;i<9;i++){
+                for(let j=3;j<6;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }            
+        }
+        else{
+            for(let i=6;i<9;i++){
+                for(let j=6;j<9;j++){
+                    arrayOfBoxTiles[boxCounter] = document.getElementById(`${i+1}-${j+1}`)
+                    boxCounter++
+                }
+            }            
+        }
+    }
+
+    counter = 0
+    arrayOfBoxTiles.forEach((tile) => {
+        if(tile.getAttribute('tiledata') == number){
+            counter++
+        }
+    })
+
+    if(counter > 1){
+        arrayOfBoxTiles.forEach((tile) => {
+            if(tile.getAttribute('tiledata') == number){
+                tile.classList.add('duplicate-tile');
+            }
+        })
+    }
+    else{
+        arrayOfBoxTiles.forEach((tile) => {
+            if(tile.getAttribute('tiledata') == number){
+                tile.classList.remove('duplicate-tile');
+            }
+        })
+    }
+
+    if(checkForWin() == true){
+        winnerScreen()
+    }
 }
 
 function createGameBoard() {
@@ -16,7 +250,6 @@ function createGameBoard() {
         for(let j=0; j<9; j++){
             let gameDIV = document.createElement('div')
             gameDIV.setAttribute('id', `${i+1}-${j+1}`)
-            gameDIV.setAttribute('class', 'board-tile')
             gameDIV.setAttribute('tileData', testGameBoard[(i*9)+j])
             
 
@@ -24,9 +257,11 @@ function createGameBoard() {
             
             if(populateTile != '0') {
                 gameDIV.style.backgroundImage = `url('./images/${populateTile}_gameboard.png')`
+                gameDIV.setAttribute('class', 'board-tile starting-tile')
                 gameDIV.setAttribute('lockedTile', '1')
             }
             else {
+                gameDIV.setAttribute('class', 'board-tile')
                 gameDIV.setAttribute('lockedTile', '0')
             }
 
@@ -132,14 +367,17 @@ function createGameBoard() {
 
     let playTiles = document.querySelectorAll('.play-tile');
     playTiles.forEach(function (playTile) {
-        playTile.addEventListener('dragstart', handleDragStart);
-        playTile.addEventListener('dragend', handleDragEnd);
+        playTile.addEventListener('dragstart', handleDragStart, false)
+        playTile.addEventListener('dragend', handleDragEnd, false)
+        playTile.addEventListener('dragover', handleDragOver, false)
     });
+
+    gameBoard.addEventListener('drop', handleDrop, false)
+    gameBoard.addEventListener('dragover', handleDragOver, false)
 }
 
 function startGame() {
-    const gameContainer = document.getElementById('game-container')
-    gameContainer.style.backgroundImage = 'url("./images/blank_game_board.png")'
+    gameBoard.style.backgroundImage = 'url("./images/blank_game_board.png")'
 
     createGameBoard()
 }
@@ -192,22 +430,22 @@ function mainMenu() {
         const gameMainMenuTitle = document.getElementById('game-main-menu-title')
 
         mainMenuStartButton.style.opacity = '1'
-        mainMenuStartButton.style.animation = 'fadeOut 1s ease-out 0s 1 forwards'
+        mainMenuStartButton.style.animation = 'fadeOut 0.5s ease-out 0s 1 forwards'
 
         menuTitleShadow.style.opacity = '1'
-        menuTitleShadow.style.animation = 'fadeOut 1s ease-out 0s 1 forwards'
+        menuTitleShadow.style.animation = 'fadeOut 0.5s ease-out 0s 1 forwards'
 
         menuTitle.style.opacity = '1'
-        menuTitle.style.animation = 'fadeOut 1s ease-out 0s 1 forwards'
+        menuTitle.style.animation = 'fadeOut 0.5s ease-out 0s 1 forwards'
 
         glowyStuff.style.opacity = '1'
-        glowyStuff.style.animation = 'fadeOut 1s ease-out 0s 1 forwards'
+        glowyStuff.style.animation = 'fadeOut 0.5s ease-out 0s 1 forwards'
 
         birdCharacter.style.opacity = '1'
         birdCharacter.style.animation = 'fadeOut 1s ease-out 0s 1 forwards'
 
         gameMainMenuTitle.style.opacity = '1'
-        gameMainMenuTitle.style.animation = 'fadeOut 1s ease-out 0s 1 forwards'        
+        gameMainMenuTitle.style.animation = 'fadeOut 0.5s ease-out 0s 1 forwards'        
 
         menuBoard.style.animation = 'slideOutToTop 0.5s ease-out 1s 1 forwards'
         
