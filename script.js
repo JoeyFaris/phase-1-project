@@ -1,7 +1,7 @@
 const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "apikeygoeshere",
+      "X-RapidAPI-Key": "c34eab33acmshdd5f894180ecbdcp12bcabjsne2f2f6a1f75b",
       "X-RapidAPI-Host": "sudoku-all-purpose-pro.p.rapidapi.com",
     },
 };
@@ -39,6 +39,7 @@ function makeNewGameBoard(){
   
   function convertSolveData(data) {
     gameBoardSolution = data.output.raw_data;
+    setGameBoardToAPI(gameBoardNumbers, gameBoardSolution)
   }
   
   function setGameBoardToAPI(startingBoardVariable, solutionVariable) {
@@ -119,7 +120,7 @@ function checkForWin(){
 function winnerScreen(){
     const menuBoard = document.getElementById('menu-background')
     const gameTiles = document.getElementsByClassName('board-tile')
-
+    console.log(gameTiles.length)
     for(let gameTile of gameTiles){
         setTimeout(() => {
                 gameTile.remove()
