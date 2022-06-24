@@ -1,6 +1,67 @@
+const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "apikeygoeshere",
+      "X-RapidAPI-Host": "sudoku-all-purpose-pro.p.rapidapi.com",
+    },
+};
+
 const gameBoard = document.getElementById('game-container') 
-const testGameBoard = "000020480001400936300600205000010003650000000010060008006840300400076150197030000"
+let gameBoardNumbers = ''
+let gameBoardSolution = ''
 let draggedPlayTile = null;
+
+function makeNewGameBoard(){
+
+    fetch(
+      "https://sudoku-all-purpose-pro.p.rapidapi.com/sudoku?create=32&output=raw",
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => convertData(response))
+      .catch((err) => console.error(err));
+  }
+  
+  
+  function convertData(data) {
+    gameBoardNumbers = data.output.raw_data;
+  
+    //solve
+    setTimeout(() => {
+      fetch(
+        `https://sudoku-all-purpose-pro.p.rapidapi.com/sudoku?solve=${gameBoardNumbers}`,
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => convertSolveData(response))
+        .catch((err) => console.error(err));
+    }, 1001);
+  }
+  
+  function convertSolveData(data) {
+    gameBoardSolution = data.output.raw_data;
+  }
+  
+  function setGameBoardToAPI(startingBoardVariable, solutionVariable) {
+    const postData = {
+      "startingBoard": startingBoardVariable,
+      "solution": solutionVariable,
+    };
+    const configurationObject = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify(postData),
+    };
+  
+    return fetch("http://localhost:3000/gameBoards", configurationObject)
+      .then((data) => data.json())
+      .then((parsed) => createGameBoard(parsed.startingBoard))
+      .catch((error) => console.log(error));
+  }
+  
 
 function handleDragStart(e) {
     setTimeout(function(){
@@ -59,9 +120,11 @@ function checkForWin(){
 function winnerScreen(){
     const menuBoard = document.getElementById('menu-background')
     const gameTiles = document.getElementsByClassName('board-tile')
-    for(let gameTile of gameTiles){
-        gameTile.style.display = 'none'
 
+    for(let gameTile of gameTiles){
+        setTimeout(() => {
+                gameTile.remove()
+        }, 10)
     }
     gameBoard.style.backgroundImage = 'url("./images/main_menu_bg.png")'
     menuBoard.style.animation = 'slideInFromTop 0.5s ease-out 0s 1 forwards'
@@ -245,13 +308,13 @@ function checkGameBoardForDuplicates(number, row, column){
     }
 }
 
-function createGameBoard() {
+function createGameBoard(theTiles) {
     for(let i=0; i<9; i++){
 
         for(let j=0; j<9; j++){
             let gameDIV = document.createElement('div')
             gameDIV.setAttribute('id', `${i+1}-${j+1}`)
-            gameDIV.setAttribute('tileData', testGameBoard[(i*9)+j])
+            gameDIV.setAttribute('tileData', theTiles[(i*9)+j])
             
 
             let populateTile = gameDIV.getAttribute('tileData')
@@ -380,7 +443,7 @@ function createGameBoard() {
 function startGame() {
     gameBoard.style.backgroundImage = 'url("./images/blank_game_board.png")'
 
-    createGameBoard()
+    makeNewGameBoard()
 }
 
 function mainMenu() {
@@ -451,6 +514,7 @@ function mainMenu() {
         menuBoard.style.animation = 'slideOutToTop 0.5s ease-out 1s 1 forwards'
         
         startGame()
+
     })
 }
 
