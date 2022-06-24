@@ -39,8 +39,6 @@ function makeNewGameBoard(){
   
   function convertSolveData(data) {
     gameBoardSolution = data.output.raw_data;
-    let gameBoardID = setGameBoardToAPI(gameBoardNumbers, gameBoardSolution)
-    console.log(gameBoardID)
   }
   
   function setGameBoardToAPI(startingBoardVariable, solutionVariable) {
@@ -121,7 +119,7 @@ function checkForWin(){
 function winnerScreen(){
     const menuBoard = document.getElementById('menu-background')
     const gameTiles = document.getElementsByClassName('board-tile')
-    console.log(gameTiles.length)
+
     for(let gameTile of gameTiles){
         setTimeout(() => {
                 gameTile.remove()
